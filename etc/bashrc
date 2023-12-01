@@ -9,7 +9,7 @@ eofPull() {
 
 eofCompile() {
     wmake $EOF_SRC/coupleElmer
-    elmerf90 -o $EOF_SRC/Elmer2OpenFOAM.so -J$EOF_SRC $EOF_SRC/Elmer2OpenFOAM.F90
+    elmerf90 -o $EOF_SRC/Elmer2OpenFOAM.so -J$EOF_SRC $EOF_SRC/Elmer2OpenFOAM.F90	## shravan - -J is to specify the directory in which to place the module files .mod 
     elmerf90 -o $EOF_SRC/OpenFOAM2Elmer.so -J$EOF_SRC $EOF_SRC/OpenFOAM2Elmer.F90
 }
 
