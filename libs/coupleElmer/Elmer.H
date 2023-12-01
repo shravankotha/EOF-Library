@@ -48,11 +48,11 @@ Original Date: 12.12.2016.
 #endif
 
 #include "fvCFD.H"
-#include "PstreamGlobals.H"
+#include "PstreamGlobals.H"		// shravan - Global functions and variables for working with parallel streams, but principally for mpi
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-namespace Foam
+namespace Foam	// shravan - All the methods under this namespace are defined in Elmer.C file
 {
 
 /*---------------------------------------------------------------------------*\
@@ -68,7 +68,7 @@ public:
     // Public data
 
         //- Construct and initialize if needed
-        Elmer(const meshT& mesh, int mode, bool init=true, bool multiregion=false);
+        Elmer(const meshT& mesh, int mode, bool init=true, bool multiregion=false);	// shravan - this is the class constructor (as it has the same name as the class). This constructor gets executed every time an object of this class is instantiated.
 
         //- Initialize
         void initialize();

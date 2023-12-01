@@ -97,7 +97,7 @@ SUBROUTINE findOverlappingBoxes(s)
   INTEGER :: ierr,  i
   INTEGER :: status(MPI_STATUS_SIZE)
 
-  CALL MPI_ALLGATHER(myBoundBox, 6, MPI_DOUBLE, ELboundBoxes(:,:,:,s), 6, MPI_DOUBLE, ELMER_COMM_WORLD, ierr)
+  CALL MPI_ALLGATHER(myBoundBox, 6, MPI_DOUBLE, ELboundBoxes(:,:,:,s), 6, MPI_DOUBLE, ELMER_COMM_WORLD, ierr)	// shravan - ELMER_COMM_WORLD is the elmer's communication world
 
   IF ( myLocalRank==0 ) THEN
     CALL MPI_SEND(ELboundBoxes(:,:,:,s), totLocalRanks*2*3, MPI_DOUBLE, &

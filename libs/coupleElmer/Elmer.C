@@ -42,19 +42,19 @@ Web:       http://eof-library.com
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
 template <class meshT>
-Foam::Elmer<meshT>::Elmer(const meshT& mesh, int mode, bool init, bool multiregion)
-:
-mesh_(mesh),
+Foam::Elmer<meshT>::Elmer(const meshT& mesh, int mode, bool init, bool multiregion)		// shravan - Foam namespace is given in Elmer.H file. Within the Foam namespace, we have a template class called Elmer under which Elmer is a method. This Elmer method is defined here.
+:	// shravan - C++ ignores white spaces so : is part of the above line
+mesh_(mesh),	// shravan - mesh and mode are arguments to the Elmer method
 mode_(mode),
 myBoundBox(mesh.points(),false)
 {
-    multiregion_ = multiregion;
+    multiregion_ = multiregion;	// shravan - multiregion_ is a variable of the class and defined in Elmer.H while multiregion is one of the arguments to Elmer method above
     if(init) initialize();
 }
 
 
 template <class meshT>
-void Foam::Elmer<meshT>::initialize()
+void Foam::Elmer<meshT>::initialize()	// shravan - Foam is the name space which has a template class called Elmer under which initilize is a method. i.e. The scope can be roughly resolved using, Foam::Elmer::Elmer
 {
     int i, j, k;
     double commTime = MPI_Wtime();
@@ -65,7 +65,7 @@ void Foam::Elmer<meshT>::initialize()
     MPI_Comm_rank(MPI_COMM_WORLD, &myGlobalRank);
     MPI_Comm_size(MPI_COMM_WORLD, &totGlobalRanks);
 
-    MPI_Comm_size(PstreamGlobals::MPI_COMM_FOAM, &totLocalRanks);
+    MPI_Comm_size(PstreamGlobals::MPI_COMM_FOAM, &totLocalRanks);	// shravan - MPI_COMM_FOAM is the communication world for the openFoam
     MPI_Comm_rank(PstreamGlobals::MPI_COMM_FOAM, &myLocalRank);
 
     totElmerRanks = totGlobalRanks-totLocalRanks;
@@ -80,7 +80,7 @@ void Foam::Elmer<meshT>::initialize()
         ElmerRanksStart = 0;
     }
 
-    ELp = new ElmerProc_t[totElmerRanks];
+    ELp = new ElmerProc_t[totElmerRanks];	// shravan - ElmerProc_t is a class defined in Elmer.H. Note that here we are dynamically allocating/instantiating totalElmerRanks number of ELp objects and each of these objects belongs to class ElmerProc_t
 
     if (ELp == nullptr) {
         FatalErrorInFunction << "Failed to allocate memory" << Foam::abort(FatalError);
@@ -90,7 +90,7 @@ void Foam::Elmer<meshT>::initialize()
         ELp[i].globalRank = i+ElmerRanksStart;
     }
 
-    OFboundBoxes = new double[totLocalRanks*2*3];
+    OFboundBoxes = new double[totLocalRanks*2*3];	// 
     ELboundBoxes = new double[totElmerRanks*2*3];
     OF_EL_overlap = new int[totLocalRanks*totElmerRanks];
     findOverlappingBoxes();
@@ -100,7 +100,7 @@ void Foam::Elmer<meshT>::initialize()
     if (mode_==-1) {
         nCells = mesh_.cells().size();
 
-        cellCentres_x = new double[nCells];
+        cellCentres_x = new double[nCells];	// shravan - cellCentres_x is a pointer to an array of size nCells. It is dynamically allocated here. 
         cellCentres_y = new double[nCells];
         cellCentres_z = new double[nCells];
 
